@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Acerca de Nosotros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Sección "¿Quiénes somos?" -->
+  <h3 style="text-align: center;">¿Quiénes somos?</h3>
+  <p style="text-align: center;">Somos estudiantes de Ingenieria en Informática en Duoc UC Plaza Vespucio.</p>
+  <!-- Imagen de la institución -->
+  <img src="https://www.duoc.cl/wp-content/uploads/2020/06/plaza-vespucio.jpg" alt="Duoc UC Plaza Vespucio" style="width: 100%;">
+  <p style="text-align: center;">Equipo conformado que trabajó para llevar a cabo esta aplicación:</p> 
+
+  <div class="circle-container">  
+    <div>
+      <img [class.rotating]="isRotating[0]" class="circle" src="https://media.tenor.com/KHwiQIuTWn8AAAAM/monkey-sad.gif" alt="">
+      <div (click)="toggleRotation(0)">
+        <p>Antonio</p>
+        <p>Campos</p>
+      </div>
+    </div>
+
+    <div>
+      <img [class.rotating]="isRotating[1]" class="circle" src="https://media.tenor.com/awZg-WgEyTYAAAAM/goofy-funny.gif" alt="">
+      <div (click)="toggleRotation(1)">
+        <p>Alonso</p>
+        <p>Cruz</p>
+      </div>
+    </div>
+    
+    <div>
+      <img [class.rotating]="isRotating[2]" class="circle" src="https://media.tenor.com/55MSmCQbMO0AAAAe/monkey.png" alt="">
+      <div (click)="toggleRotation(2)">
+        <p>Benjamín</p>
+        <p>Opazo</p>
+      </div>
+    </div>
+
+    <div>
+      <img [class.rotating]="isRotating[3]" class="circle" src="https://img2.rtve.es/i/?w=1600&i=1301494320400.jpg" alt="">
+      <div (click)="toggleRotation(3)">
+        <p>Benjamín</p>
+        <p>Muñoz</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

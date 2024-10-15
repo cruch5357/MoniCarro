@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Inicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <h2 style="text-align: center;">Bienvenido</h2>
+  <p style="text-align: justify;">Esta aplicación te permitirá registrar el flujo de pasajeros y analizar el tráfico diario en tiempo real.</p>
+
+  <!-- Imagen central representativa de la app -->
+  <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+    <img class="scanner-icon" src="https://media.istockphoto.com/id/1365496939/es/vector/plataforma-de-la-estación-de-tren-de-metro-ilustración-plana-simple-en-vista-de-perspectiva.jpg?s=612x612&w=0&k=20&c=BckqX3bgC5pSpnxLby-6ClGIT4_tJBisOFQJmroVejE=" 
+    alt="Icono QR" style="max-width: 70%; border-radius: 10px;">
+  </div>
+
+  <!-- Sección de Registro Diario -->
+  <h3 style="text-align: center;">Registro Diario</h3>
+  <p style="text-align: justify;">
+    En la sección de "Registro Diario", podrás ingresar el flujo de pasajeros que han utilizado el servicio durante el día. Esto te permitirá llevar un control detallado del número de personas transportadas en cada jornada.
+  </p>
+  <ion-button expand="block" color="primary" routerLink="/registro-diario" style="margin-top: 10px;">
+    Registro Diario
+  </ion-button>
+
+  <!-- Sección de Analíticas -->
+  <h3 style="text-align: center; margin-top: 20px;">Analíticas</h3>
+  <p style="text-align: justify;">
+    La sección de "Analíticas" te permitirá visualizar el análisis del flujo diario de pasajeros. Podrás ver gráficos que reflejan el tráfico a lo largo del tiempo, lo que te ayudará a tomar decisiones informadas basadas en los datos recolectados.
+  </p>
+  <ion-button expand="block" color="secondary" routerLink="/analisis" style="margin-top: 10px;">
+    Analíticas
+  </ion-button>
+
+</ion-content>

@@ -1,0 +1,35 @@
+ion-toolbar{
+    height: 90px;
+    color: #fff;
+    --background: #04193b;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    border-radius: 0 0 20px 20px;
+}
+
+ion-header{
+    border-radius: 0 0 20px 20px;
+}
+
+ion-title{
+    font-size: 18px;
+    color: #fff;
+}
+
+.usuario{
+    text-align: center;
+    font-size: 18px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: #fff;
+    font-weight: 500;
+}
+
+.svg-bottom {
+    position: absolute;
+    bottom: -4px;
+    width: 100%;
+    z-index: 0;
+}

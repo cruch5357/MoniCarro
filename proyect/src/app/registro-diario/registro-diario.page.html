@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Registro Diario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <!-- Separación del campo de fecha -->
+  <form [formGroup]="fechaForm" (ngSubmit)="registrarPasajeros()">
+    <ion-item lines="none" style="margin-bottom: 20px;">
+      <ion-label position="stacked" style="font-size: 18px; margin-bottom: 10px;">
+        Seleccione fecha
+      </ion-label>
+      <ion-datetime
+        formControlName="fecha"
+        display-format="DD/MM/YYYY ; HH:mm"
+        style="font-size: 16px;"
+      ></ion-datetime>
+    </ion-item>
+    
+    
+  </form>
+
+  <!-- Formulario para pasajeros y estación -->
+  <form [formGroup]="registroForm" (ngSubmit)="registrarPasajeros()">
+
+    <!-- Campo de Cantidad de Pasajeros -->
+    <ion-item lines="none" style="margin-bottom: 20px;">
+      <ion-label position="stacked" style="font-size: 18px;">Cantidad de Pasajeros</ion-label>
+      <ion-input
+        type="number"
+        formControlName="pasajeros"
+        style="font-size: 16px;"
+      ></ion-input>
+    </ion-item>
+
+    <!-- Campo de Estación con placeholder -->
+    <ion-item lines="none" style="margin-bottom: 20px;">
+      <ion-label position="stacked" style="font-size: 18px;">Estación</ion-label>
+      <ion-select formControlName="estacion" placeholder="Selecciona una estación" style="font-size: 16px;">
+        <ion-select-option *ngFor="let estacion of estaciones" [value]="estacion">
+          {{ estacion }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Botón Registrar centrado -->
+    <div style="text-align: center; margin-top: 20px;">
+      <ion-button type="submit" [disabled]="!registroForm.valid" expand="block">
+        Registrar
+      </ion-button>
+    </div>
+
+    <!-- Texto de instrucción centrado debajo del botón -->
+    <div style="text-align: center; margin-top: 10px;">
+      <p style="font-size: 14px;">Para ver los registros, dirígete a la vista <strong>Analíticas</strong>.</p>
+    </div>
+  </form>
+
+</ion-content>
