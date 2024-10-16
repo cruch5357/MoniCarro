@@ -9,7 +9,13 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerLink]="p.url ? p.url : null" routerDirection="root" detail="false" lines="none">
+            <ion-item 
+              [routerLink]="p.url ? p.url : null" 
+              routerDirection="root" 
+              detail="false" 
+              lines="none" 
+              routerLinkActive="active" 
+              [routerLinkActiveOptions]="{ exact: true }">
               <ion-icon [name]="p.icon" slot="start"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
@@ -17,13 +23,6 @@
         </ion-list>
       </ion-content>
 
-      <!-- Username with SVG background -->
-      
-      <!--<div class="usuario">
-        <p>Personal de Servicio</p>
-      </div> -->
-
-      <!-- SVG wave at the bottom of the sidemenu -->
       <div class="svg-bottom">
         <svg
           preserveAspectRatio="none"

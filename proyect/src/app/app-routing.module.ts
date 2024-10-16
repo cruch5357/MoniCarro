@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'anomalias',
     loadChildren: () => import('./anomalias/anomalias.module').then( m => m.AnomaliasPageModule)
+  },
+  {
+    path: 'informe',
+    loadChildren: () => import('./informe/informe.module').then( m => m.InformePageModule)
   }
 
 

@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
 
   checkMenuVisibility(url: string) {
     // Oculta el menú en las rutas
-    if (url === '/login' || url === '/anomalias') {
+    if (url === '/login') {
       this.menuController.enable(false);
     } else {
       this.menuController.enable(true);

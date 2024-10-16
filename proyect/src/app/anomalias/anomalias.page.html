@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Anomalias</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -30,4 +33,8 @@
       <img src="https://ipsuss.cl/ipsuss/site/artic/20190212/imag/foto_0000000120190212151659.png" alt="Imagen de análisis" />
     </a>
   </div>
+
+  <ion-button expand="block" color="danger" routerLink="/informe" style="margin-top: 10px;">
+    Obtener Informe
+  </ion-button>
 </ion-content>
