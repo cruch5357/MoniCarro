@@ -15,7 +15,7 @@ export class InformePage {
 
     const alert = await this.alertController.create({
       header: 'Descarga en Progreso',
-      message: `InformeMoniCarro_${formattedDate}.pdf (simulación)`,
+      message: `InformeMoniCarro_${formattedDate}.pdf`,
       buttons: ['OK']
     });
 
