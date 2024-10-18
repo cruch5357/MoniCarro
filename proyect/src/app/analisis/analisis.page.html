@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Graficos de Circulacion</ion-title>
+    <ion-title>Grafico de Circulacion</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,24 +13,13 @@
   </ion-buttons>
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Graficos de Circulacion</ion-title>
+      <ion-title size="large">Grafico de Circulacion</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <!-- Contenedor de imagen con link y titular -->
-  <div class="contenedor-imagen">
-    <h3><strong>Visualizacion de aglomeraciones</strong></h3>
-    <a target="_blank">
-      <img src="https://ipsuss.cl/ipsuss/site/artic/20190212/imag/foto_0000000120190212151659.png" alt="Imagen de análisis" />
-    </a>
-  </div>
-
-  <!-- Contenedor de imagen con link y titular -->
-  <div class="contenedor-imagen">
-    <h3><strong>Analisis de flujo</strong></h3>
-    <a target="_blank">
-      <img src="https://www.researchgate.net/profile/Aranzazu-Berbey-Alvarez/publication/275659133/figure/fig1/AS:1042639348580357@1625596000685/Figura-11-Perfil-de-la-Demanda-Global-de-Transporte-Colectivo-Dia-Habil-demanda-en_Q320.jpg" alt="Imagen de análisis" />
-    </a>
+  <!-- Contenedor del grafico -->
+  <div style="text-align:center;">
+    <canvas id="graficoPasajeros" width="400" height="400"></canvas>
   </div>
 
   <!-- Contenedor de boton "Ver Anomalias" -->

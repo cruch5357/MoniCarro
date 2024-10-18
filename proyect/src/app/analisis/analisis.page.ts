@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Chart, registerables } from 'chart.js'; // Importa los componentes de Chart.js
 
 @Component({
   selector: 'app-analisis',
@@ -11,9 +12,13 @@ import { map } from 'rxjs/operators';
 export class AnalisisPage implements OnInit {
   registros$: Observable<any[]> = of([]); 
   estaciones = ['Todas las estaciones', 'Estación 1', 'Estación 2', 'Estación 3', 'Estación 4']; 
-  estacionSeleccionada: string = 'Todas las estaciones'; 
+  estacionSeleccionada: string = 'Todas las estaciones';
+  public chart: any;
+  datosGrafico: any[] = []; // Almacenar los datos para el gráfico
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore) {
+    Chart.register(...registerables); // Registra todos los componentes de Chart.js
+  }
 
   ngOnInit() {
     this.obtenerRegistros(); 
@@ -45,6 +50,12 @@ export class AnalisisPage implements OnInit {
           })
       )
     );
+
+    // Suscribirse a los registros para crear el gráfico cuando los datos estén disponibles
+    this.registros$.subscribe(registros => {
+      this.datosGrafico = registros;
+      this.crearGrafico(); // Llama a la función para crear el gráfico
+    });
   }
 
   formatearDiaMes(fecha: Date): string {
@@ -54,20 +65,64 @@ export class AnalisisPage implements OnInit {
   }
 
   formatearFechaCompleta(fecha: any): string {
-    if (fecha instanceof Date) {
-      fecha = fecha.toISOString();
+    let fechaObj: Date;
+  
+    if (typeof fecha === 'string') {
+      fechaObj = new Date(fecha);
+    } else if (fecha.toDate) {
+      fechaObj = fecha.toDate();
+    } else {
+      fechaObj = new Date();
     }
-
-    if (typeof fecha === 'string' && fecha.includes('T')) {
-      const [fechaStr, horaStr] = fecha.split('T');
-      return `${fechaStr} ; ${horaStr}`; 
-    }
-
-    return fecha;
+  
+    const dia = fechaObj.getDate().toString().padStart(2, '0');
+    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0');
+    const anio = fechaObj.getFullYear();
+  
+    return `${dia}-${mes}-${anio}`;
   }
+  
 
   onEstacionSeleccionada(estacion: string) {
     this.estacionSeleccionada = estacion;
     this.obtenerRegistros();
+  }
+
+  crearGrafico() {
+    const canvas = document.getElementById('graficoPasajeros') as HTMLCanvasElement;
+    const ctx = canvas?.getContext('2d'); 
+
+    if (ctx) {
+      if (this.chart) {
+        this.chart.destroy(); 
+      }
+
+      this.chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: this.datosGrafico.map(dato => dato.fechaCompleta),  
+          datasets: [{
+            label: 'Cantidad de Pasajeros',
+            data: this.datosGrafico.map(dato => dato.pasajeros),  
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              type: 'category' 
+            },
+            y: {
+              type: 'linear',  
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    } else {
+      console.error('No se pudo obtener el contexto 2D del canvas.');
+    }
   }
 }
