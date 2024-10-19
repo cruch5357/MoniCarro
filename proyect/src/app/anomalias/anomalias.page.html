@@ -10,31 +10,18 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <!-- Contenedor de imagen con link y titular -->
-  <div class="contenedor-imagen">
-    <h3><strong>Diarias</strong></h3>
-    <a target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Comparaci%C3%B3n_de_la_evoluci%C3%B3n_de_pasajeros_entre_diferentes_aeropuertos_similares.jpg/800px-Comparaci%C3%B3n_de_la_evoluci%C3%B3n_de_pasajeros_entre_diferentes_aeropuertos_similares.jpg" alt="Imagen de análisis" />
-    </a>
-  </div>
+  <!-- Contenedor de graficos -->
+  <div class="chart-container">
+    <h3>Anomalías Diarias</h3>
+    <canvas id="dailyChart" width="400" height="400"></canvas>
 
-  <!-- Contenedor de imagen con link y titular -->
-  <div class="contenedor-imagen">
-    <h3><strong>Semanales </strong></h3>
-    <a target="_blank">
-      <img src="https://www.socialmediapymes.com/wp-content/uploads/2019/08/google-analytics-notificaciones.jpg" alt="Imagen de análisis" />
-    </a>
-  </div>
+    <h3>Anomalías Mensuales</h3>
+    <canvas id="monthlyChart" width="400" height="400"></canvas>
 
-  <!-- Contenedor de imagen con link y titular -->
-  <div class="contenedor-imagen">
-    <h3><strong>Mensuales</strong></h3>
-    <a target="_blank">
-      <img src="https://ipsuss.cl/ipsuss/site/artic/20190212/imag/foto_0000000120190212151659.png" alt="Imagen de análisis" />
-    </a>
+    <h3>Anomalías Anuales</h3>
+    <canvas id="yearlyChart" width="400" height="400"></canvas>
   </div>
-
-  <ion-button expand="block" color="danger" routerLink="/informe" style="margin-top: 10px;">
-    Obtener Informe
-  </ion-button>
 </ion-content>
+<ion-button expand="block" color="danger" routerLink="/informe" style="margin-top: 10px;">
+  Obtener Informe
+</ion-button>

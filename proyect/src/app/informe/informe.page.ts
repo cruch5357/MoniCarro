@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AnomaliesService } from '../services/anomalies.service';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -6,8 +7,21 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './informe.page.html',
   styleUrls: ['./informe.page.scss'],
 })
-export class InformePage {
-  constructor(private alertController: AlertController) {}
+export class InformePage implements OnInit {
+  anomalies: any[] = [];  // Aquí se almacenarán las anomalías
+
+  constructor(private anomaliesService: AnomaliesService, private alertController: AlertController) {}
+
+  ngOnInit() {
+    this.loadAnomalies();
+  }
+
+  // Cargar las anomalías desde Firebase
+  loadAnomalies() {
+    this.anomaliesService.getAnomalies().subscribe((data) => {
+      this.anomalies = data;
+    });
+  }
 
   async downloadReport() {
     const today = new Date();

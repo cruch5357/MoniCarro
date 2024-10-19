@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebase: {
+  firebaseConfig: {
     apiKey: "AIzaSyDTGSOq5QQPkqYaAfuq0gvL5yPi0w8A2d0",
     authDomain: "moni-carro.firebaseapp.com",
     projectId: "moni-carro",

@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 // Importaciones de Firebase usando compatibilidad
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { environment } from '../environments/environment'; // Asegúrate de tener la configuración correcta de Firebase
+import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -19,10 +19,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     FormsModule,  // Manejo de formularios
     ReactiveFormsModule,  // Para formularios reactivos
-    AngularFireModule.initializeApp(environment.firebase),  // Inicialización de Firebase
+    AngularFireModule.initializeApp(environment.firebaseConfig),  // Inicialización de Firebase
     AngularFirestoreModule  // Módulo de Firestore
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

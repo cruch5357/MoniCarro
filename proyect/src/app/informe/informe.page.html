@@ -17,52 +17,18 @@
   <div class="anomaly-report">
     <h2 class="section-title">Resumen de Anomalías</h2>
 
-    <div class="anomaly-item">
+    <div *ngFor="let anomaly of anomalies" class="anomaly-item">
       <div class="anomaly-header">
-        <h3>Anomalía #1</h3>
-        <p class="anomaly-date">Fecha: 2024-10-12</p>
+        <h3>{{ anomaly.title }}</h3>
+        <p class="anomaly-date">Fecha: {{ anomaly.date }}</p>
       </div>
       <p class="anomaly-description">
-        Descripción: Fallo en la sincronización de los datos de entrada y salida de pasajeros en la estación central, lo que ocasionó un desfase en la detección de aglomeraciones.
+        Descripción: {{ anomaly.description }}
       </p>
-      <p class="anomaly-status">Estado: En Progreso</p>
+      <p class="anomaly-status">Estado: {{ anomaly.status }}</p>
     </div>
-
-    <div class="anomaly-item">
-      <div class="anomaly-header">
-        <h3>Anomalía #2</h3>
-        <p class="anomaly-date">Fecha: 2024-10-11</p>
-      </div>
-      <p class="anomaly-description">
-        Descripción: Error en la transmisión de datos desde los sensores de los vagones hacia el sistema central, impidiendo el monitoreo en tiempo real durante las horas pico.
-      </p>
-      <p class="anomaly-status">Estado: Resuelto</p>
-    </div>
-
-    <div class="anomaly-item">
-      <div class="anomaly-header">
-        <h3>Anomalía #3</h3>
-        <p class="anomaly-date">Fecha: 2024-10-10</p>
-      </div>
-      <p class="anomaly-description">
-        Descripción: Inconsistencias en los reportes generados automáticamente, mostrando discrepancias en las tendencias de flujo de pasajeros durante el último mes.
-      </p>
-      <p class="anomaly-status">Estado: Pendiente</p>
-    </div>
-
-    <div class="anomaly-item">
-      <div class="anomaly-header">
-        <h3>Anomalía #4</h3>
-        <p class="anomaly-date">Fecha: 2024-10-09</p>
-      </div>
-      <p class="anomaly-description">
-        Descripción: El sistema de simulación de escenarios no cargó correctamente los datos históricos, lo que afectó la precisión de los análisis para eventos futuros.
-      </p>
-      <p class="anomaly-status">Estado: En Revisión</p>
-    </div>
-
-    <ion-button expand="block" color="danger" (click)="downloadReport()" style="margin-top: 10px;">
-      Obtener Informe
-    </ion-button>
   </div>
 </ion-content>
+<ion-button expand="block" color="danger" (click)="downloadReport()" style="margin-top: 10px;">
+  Obtener Informe
+</ion-button>
