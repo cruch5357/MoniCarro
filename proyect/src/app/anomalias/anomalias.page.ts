@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Chart } from 'chart.js/auto';
-import { collectionData, collection } from '@angular/fire/firestore';
-import { AngularFirestore } from '@angular/fire/compat/firestore'; // Corrección aquí
+import { AngularFirestore } from '@angular/fire/compat/firestore'; 
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,18 +20,16 @@ export class AnomaliasPage implements OnInit, OnDestroy {
   monthlyChart: any;
   yearlyChart: any;
 
-  constructor(private firestore: AngularFirestore) {} // Corrección aquí
+  constructor(private firestore: AngularFirestore) {}
 
   ngOnInit() {
     this.getAnomalies();
   }
 
   ngOnDestroy() {
-    // Cancelar la suscripción cuando el componente se destruye
     if (this.anomaliesSubscription) {
       this.anomaliesSubscription.unsubscribe();
     }
-    // Destruir gráficos cuando se salga de la vista
     this.destroyCharts();
   }
 
@@ -43,47 +40,79 @@ export class AnomaliasPage implements OnInit, OnDestroy {
       this.processAnomaliesByDate();
       this.createCharts();
     });
-  }  
+  }
 
   processAnomaliesByDate() {
-    // Agrupar anomalías por día, mes y año
     this.dailyAnomalies = this.groupByDate('day');
     this.monthlyAnomalies = this.groupByDate('month');
     this.yearlyAnomalies = this.groupByDate('year');
+    
+    // Ordenar las claves de las anomalías
+    this.dailyAnomalies = this.sortAnomaliesByDate(this.dailyAnomalies, 'day');
+    this.monthlyAnomalies = this.sortAnomaliesByDate(this.monthlyAnomalies, 'month');
+    this.yearlyAnomalies = this.sortAnomaliesByDate(this.yearlyAnomalies, 'year');
+  }
+
+  sortAnomaliesByDate(anomaliesGroup: any, type: 'day' | 'month' | 'year') {
+    const sortedKeys = Object.keys(anomaliesGroup).sort((a, b) => {
+      let dateA, dateB;
+
+      if (type === 'day') {
+        const [yearA, monthA, dayA] = a.split('-').map(Number);
+        const [yearB, monthB, dayB] = b.split('-').map(Number);
+        dateA = new Date(yearA, monthA - 1, dayA);
+        dateB = new Date(yearB, monthB - 1, dayB);
+      } else if (type === 'month') {
+        const [yearA, monthA] = a.split('-').map(Number);
+        const [yearB, monthB] = b.split('-').map(Number);
+        dateA = new Date(yearA, monthA - 1);
+        dateB = new Date(yearB, monthB - 1);
+      } else {
+        dateA = new Date(Number(a), 0);
+        dateB = new Date(Number(b), 0);
+      }
+
+      return dateA.getTime() - dateB.getTime(); // Orden ascendente
+    });
+
+    // Crear un nuevo objeto con las claves ordenadas
+    const sortedAnomaliesGroup: any = {};
+    sortedKeys.forEach(key => {
+      sortedAnomaliesGroup[key] = anomaliesGroup[key];
+    });
+
+    return sortedAnomaliesGroup;
   }
 
   groupByDate(type: 'day' | 'month' | 'year') {
     return this.anomalies.reduce((acc, anomaly) => {
-      // Asumiendo que anomaly.date está en el formato dd-mm-yyyy
       const dateParts = anomaly.date.split('-');
-      const formattedDate = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`); // Convertir a yyyy-mm-dd
-  
-      // Validar si la fecha es válida
+      const formattedDate = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+
       if (isNaN(formattedDate.getTime())) {
         console.error('Fecha inválida encontrada:', anomaly.date);
-        return acc; // Saltar esta anomalía si la fecha no es válida
+        return acc;
       }
-  
+
       let key = '';
-  
+
       if (type === 'day') {
-        key = formattedDate.toISOString().split('T')[0]; // yyyy-mm-dd
+        key = formattedDate.toISOString().split('T')[0];
       } else if (type === 'month') {
-        key = `${formattedDate.getFullYear()}-${formattedDate.getMonth() + 1}`; // yyyy-mm
+        key = `${formattedDate.getFullYear()}-${formattedDate.getMonth() + 1}`;
       } else if (type === 'year') {
-        key = `${formattedDate.getFullYear()}`; // yyyy
+        key = `${formattedDate.getFullYear()}`;
       }
-  
+
       if (!acc[key]) {
         acc[key] = [];
       }
       acc[key].push(anomaly);
       return acc;
     }, {});
-  }  
+  }
 
   createCharts() {
-    // Destruir gráficos anteriores antes de crear nuevos
     this.destroyCharts();
 
     // Gráfico de anomalías diarias
@@ -98,6 +127,20 @@ export class AnomaliasPage implements OnInit, OnDestroy {
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1
         }]
+      },
+      options: {
+        scales: {
+          x: {
+            ticks: {
+              callback: function(value: any, index: number, values: any) {
+                // Convertimos value a número para que coincida con el tipo esperado
+                const dateStr = this.getLabelForValue(value as number);
+                const [year, month, day] = dateStr.split('-');
+                return `${day}-${month}-${year}`; // Formato dd-mm-yyyy
+              }
+            }
+          }
+        }
       }
     });
 

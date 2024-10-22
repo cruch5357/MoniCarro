@@ -31,7 +31,7 @@ export class AnalisisPage implements OnInit {
           .filter((registro: any) => this.estacionSeleccionada === 'Todas las estaciones' || registro.estacion === this.estacionSeleccionada)
           .map((registro: any) => {
             let fecha: Date;
-  
+
             if (typeof registro.fecha === 'string') {
               fecha = new Date(registro.fecha); 
             } else if (registro.fecha.toDate) {
@@ -39,15 +39,17 @@ export class AnalisisPage implements OnInit {
             } else {
               fecha = new Date(); 
             }
-  
+
             const diaMes = this.formatearDiaMes(fecha);
-            const fechaCompleta = this.formatearFechaCompleta(registro.fecha); 
+            const fechaCompleta = this.formatearFechaCompleta(fecha); 
             return {
               ...registro,
               diaMes,
-              fechaCompleta
+              fechaCompleta,
+              fechaObj: fecha // Agregamos el objeto de fecha para facilitar la ordenación
             };
           })
+          .sort((a, b) => a.fechaObj.getTime() - b.fechaObj.getTime()) // Ordenar por fecha
       )
     );
 
@@ -64,24 +66,12 @@ export class AnalisisPage implements OnInit {
     return `${dia}/${mes}`;
   }
 
-  formatearFechaCompleta(fecha: any): string {
-    let fechaObj: Date;
-  
-    if (typeof fecha === 'string') {
-      fechaObj = new Date(fecha);
-    } else if (fecha.toDate) {
-      fechaObj = fecha.toDate();
-    } else {
-      fechaObj = new Date();
-    }
-  
-    const dia = fechaObj.getDate().toString().padStart(2, '0');
-    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0');
-    const anio = fechaObj.getFullYear();
-  
+  formatearFechaCompleta(fecha: Date): string {
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const anio = fecha.getFullYear();
     return `${dia}-${mes}-${anio}`;
   }
-  
 
   onEstacionSeleccionada(estacion: string) {
     this.estacionSeleccionada = estacion;
@@ -112,11 +102,19 @@ export class AnalisisPage implements OnInit {
         options: {
           scales: {
             x: {
-              type: 'category' 
+              type: 'category',
+              title: {
+                display: true,
+                text: 'Fechas'
+              }
             },
             y: {
               type: 'linear',  
-              beginAtZero: true
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Cantidad de Pasajeros'
+              }
             }
           }
         }
