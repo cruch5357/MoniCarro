@@ -33,7 +33,7 @@ La siguiente imagen muestra una demostración general del sistema, incluyendo:
 - Gráfico de circulación  
 - Vista de anomalías  
 
-[demo](assets/demo.png)
+![demo](assets/demo.png)
 
 
 ## ✨ Funcionalidades Principales
